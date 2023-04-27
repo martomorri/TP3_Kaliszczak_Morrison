@@ -9,7 +9,8 @@
     <title>Document</title>
 </head>
 <body>
-    <div id="totalDiv"></div>
+    <h1>Bienvenido a tus compras online</h1>
+    <!-- <div id="totalDiv"></div> -->
     <form class="form-inline my-2 my-lg-0">
         <div class="row">
             <div class="col-md-10">
@@ -17,8 +18,12 @@
             </div>
             <div class="col-md-2">
                 <button id="buscarBoton" class="btn btn-primary">Buscar</button>
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" onclick="getCategories()" data-bs-toggle="dropdown" aria-expanded="false">
+                    Filtrar por categoria
+                  </button>
+                  <ul class="dropdown-menu" id="categories" aria-labelledby="dropdownMenuButton1">
+                  </ul>
             </div>
-        </div>
         <div class="col-10">
         </div>
     </form>
@@ -47,11 +52,14 @@
             
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary">Comprar</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Comprar</button>
             </div>
         </div>
         </div>
+    </div>
+    <div id="paginacion">
+        <a id="masProductos">Ver mas productos</a>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
