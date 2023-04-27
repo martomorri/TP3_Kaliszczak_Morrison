@@ -7,11 +7,8 @@ const getProducts = (url, skip) => {
     axios.get(url)
         .then(res => {
             const tablaProductos = document.getElementById("tablaProductos");
-            // const totalDiv = document.getElementById("totalDiv");
-            // totalDiv.innerHTML = `Total: ${res.data.total}`;
             res.data.products.forEach(element => {
                 const fila = document.createElement("tr");
-                //fila.setAttribute("id", `${element.id}`)
                 fila.innerHTML = `<th>${element.id}</th>
                             <td>${element.title}</td>
                             <td>U$D${element.price}</td>
@@ -20,44 +17,49 @@ const getProducts = (url, skip) => {
                 tablaProductos.appendChild(fila);
             });
 
-            document.getElementById("masProductos").onclick = () => {
-                tablaProductos.innerHTML = "";
-                const paginacion = document.getElementById("paginacion");
-
-                console.log(volver);
-                if (!document.getElementById("volver"));
-                paginacion.appendChild(volver);
-                skip += limit;
-                console.log(res.data.skip)
-                getProducts("https://dummyjson.com/products?limit=" + limit + "&skip=", skip);
-            }
-            // console.log(res.data.skip);
-
             console.log(res);
         })
 }
 
-const paginacion = document.getElementById("paginacion");
-const volver = document.createElement("a");
-volver.setAttribute("id", "volver");
-volver.innerHTML = "Volver";
-volver.onclick = () => {
+const masProductos = document.getElementById("masProductos");
+masProductos.onclick = () => {
+    // const tablaProductos = document.getElementById("tablaProductos");
+    const paginacion = document.getElementById("paginacion");
+    // if ((skip + limit) > 100) {
+    //     tablaProductos.innerHTML = "";
+    //     const notMore = document.createElement("p");
+    //     notMore.innerText = "No hay mas elementos cargados en la API. Vuelva hacia atras.";
+    //     paginacion.appendChild(notMore);
+    // }
+    // else {
+    //     tablaProductos.removeChild(notMore);
+    // }
     tablaProductos.innerHTML = "";
-    skip -= limit;
-    if (skip == 0) {
-        paginacion.removeChild(volver);
+    const volver = document.createElement("a");
+    volver.setAttribute("id", "volver");
+    volver.setAttribute("href","#");
+    volver.innerHTML = "Volver";
+    volver.onclick = () => {
+        tablaProductos.innerHTML = "";
+        skip -= limit;
+        if (skip >= 120) {
+            skip = 90;
+        }
+        if (skip == 0) {
+            paginacion.removeChild(volver);
+        }
+        getProducts("https://dummyjson.com/products?limit=" + limit + "&skip=", skip);
     }
+
+    if (!document.getElementById("volver")) paginacion.appendChild(volver);
+    console.log(volver);
+    skip += limit;
     getProducts("https://dummyjson.com/products?limit=" + limit + "&skip=", skip);
 }
-
-if (!document.getElementById("volver"))
-    paginacion.appendChild(volver);
-
 
 getProducts("https://dummyjson.com/products?limit=" + limit + "&skip=", 0);
 
 const filterProducts = text => {
-    // console.log("hola");
     let url = "https://dummyjson.com/products/search?q=" + text;
     axios.get(url)
         .then(res => {
@@ -66,7 +68,6 @@ const filterProducts = text => {
             tablaProductos.innerHTML = "";
             res.data.products.forEach(element => {
                 const fila = document.createElement("tr");
-                //fila.setAttribute("id", `${element.id}`)
                 fila.innerHTML = `<th>${element.id}</th>
                             <td>${element.title}</td>
                             <td>U$D${element.price}</td>
@@ -80,10 +81,6 @@ const filterProducts = text => {
 const getById = id => {
     let url = "https://dummyjson.com/products/" + id;
     return axios.get(url)
-    /*.then(res => {
-        console.log(res.data);
-        return res.data;
-    })*/
 }
 
 const search = document.getElementById("buscarBoton");
@@ -97,10 +94,6 @@ search.onclick = (e) => {
     e.preventDefault();
     filterProducts(input.value);
 }
-
-/*const more = document.querySelectorAll("#verMas");
-console.log(more);
-const fila = more.parentElement.parentElement;*/
 
 const verMas = id => {
     const titulo = document.getElementById("titulo");
@@ -129,16 +122,12 @@ const getCategories = () => {
                 console.log(element);
                 const categorie = document.createElement("li");
                 categorie.innerHTML = `<a class="dropdown-item" href="#" onclick="filterByCategories('${element}')">${element}</a>`
-                // console.log(categorie);
                 dropdown.appendChild(categorie);
             });
         })
 }
 
-// getCategories("https://dummyjson.com/products/categories");
-
 const filterByCategories = cat => {
-    // console.log("hola");
     let url = "https://dummyjson.com/products/category/" + cat;
     axios.get(url)
         .then(res => {
@@ -147,7 +136,6 @@ const filterByCategories = cat => {
             tablaProductos.innerHTML = "";
             res.data.products.forEach(element => {
                 const fila = document.createElement("tr");
-                //fila.setAttribute("id", `${element.id}`)
                 fila.innerHTML = `<th>${element.id}</th>
                             <td>${element.title}</td>
                             <td>U$D${element.price}</td>
