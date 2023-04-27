@@ -140,7 +140,7 @@ const filterByCategories = cat => {
                             <td>${element.title}</td>
                             <td>U$D${element.price}</td>
                             <td>${element.rating}</td>
-                            <td><button onclick="verMas(${element.id})" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalProducto">Ver Mas</button></td>`;
+                            <td><button onclick="verMas(${element.id})" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalProducto">Ver Mas</button></td>`;
                 tablaProductos.appendChild(fila);
             });
         })
