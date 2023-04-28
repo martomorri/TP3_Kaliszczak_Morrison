@@ -23,38 +23,28 @@ const getProducts = (url, skip) => {
 
 const masProductos = document.getElementById("masProductos");
 masProductos.onclick = () => {
-    // const tablaProductos = document.getElementById("tablaProductos");
+    skip += limit;
     const paginacion = document.getElementById("paginacion");
-    // if ((skip + limit) > 100) {
-    //     tablaProductos.innerHTML = "";
-    //     const notMore = document.createElement("p");
-    //     notMore.innerText = "No hay mas elementos cargados en la API. Vuelva hacia atras.";
-    //     paginacion.appendChild(notMore);
-    // }
-    // else {
-    //     tablaProductos.removeChild(notMore);
-    // }
-    tablaProductos.innerHTML = "";
-    const volver = document.createElement("a");
-    volver.setAttribute("id", "volver");
-    volver.setAttribute("href","#");
-    volver.innerHTML = "Volver";
-    volver.onclick = () => {
+    if (skip > 90) paginacion.removeChild(masProductos);
+    else if (skip <= 90) {
         tablaProductos.innerHTML = "";
-        skip -= limit;
-        if (skip >= 120) {
-            skip = 90;
+        const volver = document.createElement("a");
+        volver.setAttribute("id", "volver");
+        volver.setAttribute("href", "#");
+        volver.innerHTML = "Volver";
+        volver.onclick = () => {
+            tablaProductos.innerHTML = "";
+            skip -= limit;
+            if (skip >= 120) skip = 90;
+            if (skip == 0) paginacion.removeChild(volver);
+            if (skip < 90) paginacion.appendChild(masProductos);
+            getProducts("https://dummyjson.com/products?limit=" + limit + "&skip=", skip);
         }
-        if (skip == 0) {
-            paginacion.removeChild(volver);
-        }
+        if (skip == 90) paginacion.removeChild(masProductos);
+        if (!document.getElementById("volver")) paginacion.appendChild(volver);
+        console.log(volver);
         getProducts("https://dummyjson.com/products?limit=" + limit + "&skip=", skip);
     }
-
-    if (!document.getElementById("volver")) paginacion.appendChild(volver);
-    console.log(volver);
-    skip += limit;
-    getProducts("https://dummyjson.com/products?limit=" + limit + "&skip=", skip);
 }
 
 getProducts("https://dummyjson.com/products?limit=" + limit + "&skip=", 0);
