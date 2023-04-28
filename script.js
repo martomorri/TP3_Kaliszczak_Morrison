@@ -30,12 +30,11 @@ masProductos.onclick = () => {
         tablaProductos.innerHTML = "";
         const volver = document.createElement("a");
         volver.setAttribute("id", "volver");
-        volver.setAttribute("href", "#");
+        volver.setAttribute("class", "link-primary");
         volver.innerHTML = "Volver";
         volver.onclick = () => {
             tablaProductos.innerHTML = "";
             skip -= limit;
-            if (skip >= 120) skip = 90;
             if (skip == 0) paginacion.removeChild(volver);
             if (skip < 90) paginacion.appendChild(masProductos);
             getProducts("https://dummyjson.com/products?limit=" + limit + "&skip=", skip);
